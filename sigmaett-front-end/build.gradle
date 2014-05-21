@@ -1,0 +1,34 @@
+apply plugin: 'war'
+apply plugin: 'jetty'
+apply plugin: 'eclipse-wtp'
+
+jar.baseName    = "com.ingeniorum"
+jar.version  	= "1.0"
+jar.classifier  = "SNAPSHOT"
+
+war.baseName    = "com.ingeniorum"
+war.version  	= "1.0"
+war.classifier  = "SNAPSHOT"
+
+repositories {
+   mavenCentral()
+}
+ 
+dependencies {
+   providedCompile 'javax.servlet:servlet-api:2.5'
+   compile 'org.springframework:spring-webmvc:3.2.2.RELEASE'
+   compile 'jstl:jstl:1.2'
+   compile 'taglibs:standard:1.1.2'   
+   runtime 'javax.servlet:jstl:1.1.2'
+}
+
+task deploy (dependsOn: war){
+	copy {
+	    from "build/libs"
+	    into "C:/Program Files/Apache Software Foundation/Tomcat 7.0/webapps"
+	    include "*.war"
+	}
+}
+
+/* Change context path (base url). otherwise defaults to name of project */
+jettyRunWar.contextPath = ''
