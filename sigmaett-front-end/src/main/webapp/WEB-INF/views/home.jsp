@@ -20,8 +20,15 @@
 	}
 
 	$(document).ready(function() {
-		$("#boton").click(function() {
+		$("#botonExt").click(function() {
 			crunchifyAjax();
+		});
+		$("#botonName").click(function() {
+			$.post("name", {
+				name : $("#firstname").val()
+			}).done(function(data) {
+				location.reload();
+			});
 		});
 	});
 </script>
@@ -32,10 +39,11 @@
 <title>Home</title>
 </head>
 <body>
-	<h1>Hello world!</h1>
+	<h1>Hello world! ${name}</h1>
 
 	<input type="text" id="firstname" name="firstname" />
-	<button id="boton">Get External Content</button>
+	<button id="botonExt">Get External Content</button>
+	<button id="botonName">Set Name</button>
 
 	<div id="result" align="center">Nothing yet!</div>
 </body>

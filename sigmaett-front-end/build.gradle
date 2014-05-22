@@ -20,6 +20,8 @@ dependencies {
    compile 'jstl:jstl:1.2'
    compile 'taglibs:standard:1.1.2'   
    runtime 'javax.servlet:jstl:1.1.2'
+   
+   
 }
 
 task deploy (dependsOn: war){

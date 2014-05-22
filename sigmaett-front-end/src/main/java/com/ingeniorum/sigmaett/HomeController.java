@@ -5,12 +5,16 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Random;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.ingeniorum.sigmaett.dao.DataService;
 
 /**
  * Handles requests for the application home page.
@@ -18,14 +22,26 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class HomeController
 {
+    @Autowired
+    private DataService service;
+
     /**
      * Simply selects the home view to render by returning its name.
      */
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String home(Locale locale, Model model)
     {
-        model.addAttribute("serverTime", "Nothing");
+        System.out.println("Home " + service.getName());
+        model.addAttribute("name", service.getName());
         return "home";
+    }
+
+    @RequestMapping(value = "/name", method = RequestMethod.POST)
+    public String setName(@RequestParam("name") String name)
+    {
+        System.out.println("setName " + name);
+        service.setName(name);
+        return "redirect:/";
     }
 
     @RequestMapping(value = "/ajaxtest", method = RequestMethod.POST)
